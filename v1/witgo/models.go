@@ -19,20 +19,22 @@ import (
 )
 
 type Value struct {
-	Expressions []string `json:expressions`
-	Value       string   `json:value`
+	Expressions []string `json:"expressions,omitempty"`
+	Value       string   `json:"value,omitempty"`
 }
 
 type Entity struct {
-	Lang    string   `json:lang`
-	Closed  bool     `json:closed`
-	Exotic  bool     `json:exotic`
-	Value   string   `json:value`
-	Values  []*Value `json:values`
-	Builtin bool     `json:builtin`
-	Doc     string   `json:doc`
-	Name    string   `json:name`
-	ID      string   `json:id`
+	Lang       string   `json:"lang,omitempty"`
+	Closed     bool     `json:"closed,omitempty"`
+	Exotic     bool     `json:"exotic,omitempty"`
+	Value      string   `json:"value,omitempty"`
+	Values     []*Value `json:"values,omitempty"`
+	Builtin    bool     `json:"builtin,omitempty"`
+	Doc        string   `json:"doc,omitempty"`
+	Name       string   `json:"name,omitempty"`
+	ID         string   `json:"id,omitempty"`
+	Confidence float32  `json:"confidence,omitempty"`
+	Type       string   `json:"type,omitempty"`
 }
 
 type EntityMap map[string][]*Entity
@@ -40,7 +42,7 @@ type EntityMap map[string][]*Entity
 func (m EntityMap) FirstEntityValue(key string) (out string, err error) {
 	var (
 		entities []*Entity
-		found    bool
+		found bool
 	)
 	if entities, found = m[key]; !found || len(entities) == 0 {
 		err = fmt.Errorf("No entities associated with key %v", key)
@@ -51,9 +53,10 @@ func (m EntityMap) FirstEntityValue(key string) (out string, err error) {
 }
 
 type ConverseResponse struct {
-	Type       string    `json:type`
-	Msg        string    `json:msg`
-	Action     string    `json:action`
-	Entities   EntityMap `json:entities`
-	Confidence float64   `json:confidence`
+	Type         string    `json:"type,omitempty"`
+	Msg          string    `json:"msg,omitempty"`
+	Action       string    `json:"action,omitempty"`
+	Entities     EntityMap `json:"entities,omitempty"`
+	Confidence   float64   `json:"confidence,omitempty"`
+	QuickReplies []string`json:"quickreplies,omitempty"`
 }
